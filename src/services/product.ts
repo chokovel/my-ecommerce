@@ -1,8 +1,9 @@
 import fs from "fs";
 import path from "path";
-const {Product} = require ("../models");
+// const {Product} = require ("../models");
 import HttpError from "../utils/httpError";
-import FILE_HOST  from "../config/env";
+import envsecret  from "../config/env";
+import db from "../models";
 
 const createProduct = async (data:any) =>{
 const {
@@ -17,7 +18,7 @@ const {
     // rating,
     // numReviews
 } = data;
-const product = await Product.create({
+const product = await db.Product.create({
     name, 
     image, 
     brand, 
@@ -33,12 +34,13 @@ return product;
 }
 
 const getProducts = async ()=> {
-    const products = await Product.findAll()
+    const products = await db.Product.findAll()
+    console.log("finding products", products);
     return products
 }
 
 const getProductById = async(id:Number) => {
-    const product = await Product.findByPk(id)
+    const product = await db.Product.findByPk(id)
     if(!product){
         throw new HttpError("Product not found", 404)
     }
@@ -46,7 +48,7 @@ const getProductById = async(id:Number) => {
 }
 
 const updateProduct = async(id:Number, data:any)=> {
-    const product = await Product.findByPk(id)
+    const product = await db.Product.findByPk(id)
     if(!product){
         throw new HttpError("Product not found", 404)
     }
@@ -78,7 +80,7 @@ const updateProduct = async(id:Number, data:any)=> {
 }
 
 const deleteProduct = async (id:Number, userId:string) => {
-    const product = await Product.findByPk(id)
+    const product = await db.Product.findByPk(id)
     if(!product){
         throw new HttpError("Product not found", 404)
     }
@@ -87,8 +89,8 @@ const deleteProduct = async (id:Number, userId:string) => {
     }
     const imagePath = path.join(
     __dirname, 
-    "../public/", 
-product.image.split(`${FILE_HOST}`)[1])
+    "../../public/", 
+product.image.split(`${envsecret.FILE_HOST}`)[1])
 
     fs.unlinkSync(imagePath);
     await product.destroy();
@@ -96,7 +98,7 @@ product.image.split(`${FILE_HOST}`)[1])
 }
 
 const rateProduct = async (id:Number, data:any) => {
-    const product = await Product.findByPk(id);
+    const product = await db.Product.findByPk(id);
     if(!product) {
         throw new HttpError("Product not found", 404);
     }
@@ -112,7 +114,7 @@ const rateProduct = async (id:Number, data:any) => {
 }
 
 const getProductsByUser = async (id:Number) => {
-    const products = await Product.findAll({
+    const products = await db.Product.findAll({
         where: {
             authorId: id,
         },

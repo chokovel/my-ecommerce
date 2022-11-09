@@ -1,16 +1,16 @@
 {
   "development": {
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "sqlite",
     "storage": "./database.sqlite3"
   },
   "test": {
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "sqlite",
     "storage": "memory"
   },
   "production": {
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "sqlite",
     "storage": "./database.sqlite3"
   }

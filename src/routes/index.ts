@@ -1,13 +1,15 @@
-import express from "express";
+import express, { Request, Response, NextFunction} from "express";
 const router = express.Router();
-
+import ProductService from "../services/product";
+import validateProduct from "../utils/product";
+import MSG_TYPES from "../utils/validation/msgTypes";
 import UserRoutes from "./users";
 import ProductRoutes from "./product";
+import pages from "./pages";
 
 /* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
+
+router.use("/", pages)
 router.use("/", UserRoutes);
 router.use("/product", ProductRoutes);
 

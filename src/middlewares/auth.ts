@@ -1,23 +1,34 @@
-const jwt= require ("jsonwebtoken");
-const { User } = require("../models");
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express"
+import db from "../models";
+import "dotenv/config"
+// const jwt= require ("jsonwebtoken");
+// const { User } = require("../models");
 
-export async function verifyToken(req:any, res:any, next:any) {
+export async function verifyToken(req: Request, res: Response, next: NextFunction) {
+
+    // console.log(JSON.stringify(req.session.user, null, 2));
+    let token: string;
     if (
         req.headers.authorization &&
         req.headers.authorization.startsWith("Bearer")
     ) {
-        try {
-            const  token = req.headers.authorization.split(" ")[1];
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            console.log("decoded", decoded);
-            const user = await User.findOne({ where: { id: decoded.id}})
-            req.user = user;
-            return next();
-        } catch (error) {
-            res.status(400).send("Invalid token");
-        }
+        token = req.headers.authorization.split(" ")[1];
     }  else {
-        return res.status(404).send("Bearer token is missing")
+        token = <string>req.session?.user?.token;
+    }
+    // res.send(JSON.stringify({ store: req.sessionStore, session: req.session, id: req.sessionID, token:}, null, 2))
+    // return ;
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
+        // console.log("decoded", decoded);
+        const user = await db.User.findOne({ where: { id: decoded.id}})
+        res.locals.user = user;
+        next();
+    } catch (error) {
+        res.status(400).send("Invalid token");
     }
 }
-module.exports = verifyToken;
+
+// Logout
+

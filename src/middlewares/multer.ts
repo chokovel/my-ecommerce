@@ -18,7 +18,7 @@ const fileSizeLimitErrorHandler = (
 //Set The Storage Engine
 const storage = diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, join(__dirname, "../public/upload"));
+		cb(null, join(__dirname, "../../public/uploads"));
 	},
 	filename: function (req, file, cb) {
 		cb(
@@ -34,7 +34,7 @@ const storage = diskStorage({
 //Check File Type
 function checkFileType(file: any, cb: any) {
 	//Allowed ext
-	const filetypes = /jpeg|jpg|png|gif/;
+	const filetypes = /jpeg|jpeg|jpg|png|gif/;
 
 	//Check ext
 	const extname = filetypes.test(_extname(file.originalname).toLowerCase());
@@ -52,7 +52,7 @@ function checkFileType(file: any, cb: any) {
 //Init Upload
 const upload = multer({
 	storage: storage,
-	limits: { fileSize: 2000000 },
+	limits: { fileSize: 100000000000 },
 	fileFilter: function (req, file, cb) {
 		checkFileType(file, cb);
 	},
