@@ -44,10 +44,7 @@ export const login = async (req: Request, res: Response) => {
 		const products = await ProductService.getProductsByUser(
 			user.id
 		);
-		// token implementation
-		res.locals.user = JSON.stringify(user);
-		res.locals.products = JSON.stringify(products);
-		// console.log("iser", res.locals.user)
+		
 		
 		req.session.regenerate(function (err) {
 			if (err) throw new Error(err)
@@ -56,7 +53,8 @@ export const login = async (req: Request, res: Response) => {
 			req.session.user = user;
 			req.session.save(function (err) {
 			  if (err) throw new Error(err)
-			  res.status(200).render('dashboard');
+			//   res.status(200).render('dashboard');
+			res.status(301).redirect('dashboard');
 			})
 		})
 		return;

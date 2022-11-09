@@ -9,8 +9,8 @@ import pages from "./pages";
 
 /* GET home page. */
 
-router.use("/", pages)
 router.use("/", UserRoutes);
+router.use("/", pages)
 router.use("/product", ProductRoutes);
 
 export default router;

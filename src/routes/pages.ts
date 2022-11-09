@@ -20,15 +20,19 @@ import { verifyToken } from "../middlewares/auth";
     //logout
     // router.post('/logout',  newUser.logout);
 
-//     router.get('/dashboard', function(req: Request, res: Response, next: NextFunction) {
+    router.use(verifyToken)
+
+    router.get('/dashboard', ProductController.getProductsForDashboard
+//     function(req: Request, res: Response, next: NextFunction) {
 //         res.render('dashboard');
-//    });
+//    }
+   );
     router.get('/addproduct', function(req: Request, res: Response, next: NextFunction) {
         res.render('addproduct');
    });
-    router.get('/editproduct', function(req: Request, res: Response, next: NextFunction) {
-        res.render('editproduct');
-   });
+    router.get('/editproduct/:id',
+    ProductController.getProductByIdForEdit
+   );
 
  
 export default router

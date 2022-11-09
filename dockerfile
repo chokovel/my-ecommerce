@@ -19,6 +19,6 @@ COPY --from=dependencies /app/lib ./lib
 RUN yarn --production
 
 # RUN ls -ah
-EXPOSE 3500
+EXPOSE 3200
 
 CMD ["yarn", "dev"]

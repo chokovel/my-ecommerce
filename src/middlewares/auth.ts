@@ -26,7 +26,9 @@ export async function verifyToken(req: Request, res: Response, next: NextFunctio
         res.locals.user = user;
         next();
     } catch (error) {
-        res.status(400).send("Invalid token");
+        // res.status(400).send("Invalid token");
+        console.error(error);
+        res.status(400).render('login', { message: "You Are Not Logged In" });
     }
 }
 

@@ -6,6 +6,7 @@ import logger from "morgan";
 import cors from "cors";
 import "dotenv/config";
 import session from "express-session";
+import methodOverride from "method-override";
 const SequelizeStore = require("connect-session-sequelize")(session.Store);;
 
 
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride('_method'))
 app.use(cookieParser());
 app.use(session({
 	secret: <string>process.env.SESSION_SECRET,  //instance of nodejs runnign on my machine

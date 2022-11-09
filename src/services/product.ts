@@ -35,7 +35,7 @@ return product;
 
 const getProducts = async ()=> {
     const products = await db.Product.findAll()
-    console.log("finding products", products);
+    // console.log("finding products", products);
     return products
 }
 
@@ -87,10 +87,13 @@ const deleteProduct = async (id:Number, userId:string) => {
     if(product.authorId !== userId){
         throw new HttpError("You are not authorized to delete this product", 404)
     }
+    console.log('Image Path: ', envsecret);
     const imagePath = path.join(
     __dirname, 
     "../../public/", 
-product.image.split(`${envsecret.FILE_HOST}`)[1])
+    // Nullish Coalescence Operator
+product.image.split(`${envsecret.FILE_HOST}`)[1] ?? product.image.split('http://localhost:3500')[1]);
+
 
     fs.unlinkSync(imagePath);
     await product.destroy();
@@ -121,4 +124,12 @@ const getProductsByUser = async (id:Number) => {
     })
     return products;
 }
-export default {createProduct,  getProducts, getProductById, updateProduct, deleteProduct, rateProduct,getProductsByUser }
+export default {
+    createProduct,  
+    getProducts, 
+    getProductById, 
+    updateProduct, 
+    deleteProduct, 
+    rateProduct,
+    getProductsByUser
+}
