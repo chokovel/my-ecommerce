@@ -95,7 +95,7 @@ const deleteProduct = async (req: any, res: any) => {
 			req.params.id,
 			res.locals?.user?.id
 		);
-		res.status(301).redirect('/dashboard');;
+		res.status(301).redirect('/dashboard');
 		// res.status(200).json({ message: MSG_TYPES.PRODUCT_DELETED, product });
 	} catch (error: any) {
 		// console.log(error);

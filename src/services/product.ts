@@ -87,7 +87,7 @@ const deleteProduct = async (id:Number, userId:string) => {
     if(product.authorId !== userId){
         throw new HttpError("You are not authorized to delete this product", 404)
     }
-    console.log('Image Path: ', envsecret);
+    // console.log('Image Path: ', envsecret);
     const imagePath = path.join(
     __dirname, 
     "../../public/", 

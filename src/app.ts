@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'))
 app.use(cookieParser());
 app.use(session({
-	secret: <string>process.env.SESSION_SECRET,  //instance of nodejs runnign on my machine
+	secret: <string>process.env.SESSION_SECRET,  //instance of nodejs running on my machine
     resave: true,
     saveUninitialized: true,
 }))
@@ -40,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 
 app.use("/", indexRouter);
+
 /*
  * app.use("/page", pageRouter)
  * app.use("/user", userRouter)
