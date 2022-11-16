@@ -28,7 +28,6 @@ COPY --from=dependencies ./app/bin ./bin
 COPY --from=dependencies ./app/lib ./lib
 COPY --from=dependencies ./app/lib/views ./views
 COPY --from=dependencies ./app/database.sqlite3 ./database.sqlite3
-COPY --from=dependencies ./app/database.sqlite3-journal ./database.sqlite3-journal
 COPY --from=dependencies ./app/.sequelizerc ./.sequelizerc
 
 # RUN ls -ah
