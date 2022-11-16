@@ -10,7 +10,7 @@
     "storage": "memory"
   },
   "production": {
-    "host": "127.0.0.1",
+    "host": "my-node-ecommerce.herokuapp.com",
     "dialect": "sqlite",
     "storage": "./database.sqlite3"
   }
